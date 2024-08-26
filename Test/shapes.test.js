@@ -1,4 +1,4 @@
-const { Circle, Triangle, Square } = require('./Library/shape.js');
+const { Circle, Triangle, Square } = require('../Library/shapes');
 
 // A simply test to render a green circle
 test('Circle render', () => {

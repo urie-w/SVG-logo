@@ -1,13 +1,27 @@
-const inquirer = require('inquirer');
 const fs = require('fs');
+const inquirer = require("inquirer");
+const {Circle, Triangle, Square} = require('./Library/shapes.js');
 // const circle = require('./Library/shape.js');
 // const triangle = require('./Library/shape.js');
 // const square = require('./Library/shape.js');
 // const colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "black", "white", "gray", "brown", "salmon", "sandybrown", "seagreen", "seashell", "sienna", "silver", "skyblue", "slateblue", "slategray", "slategrey", "snow",
 //     "springgreen", "steelblue", "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat", "white", "whitesmoke", "yellow", "yellowgreen"];
 
-const {Circle, Triangle, Square} = require('./Library/shape.js');
-const { input } = require('@inquirer/prompts');
+class Svg{
+    constructor() {
+        this.textElement = ''
+        this.shapeElement = ''
+    }
+    render() {
+        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement}${this.textElement}</svg>`
+    }
+    setTextElement(text, color) {
+        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
+    }
+    setShapeElement(shape) {
+        this.shapeElement = shape.render()
+    }
+}
 
 //Defines the questions for the
 const questions = [
@@ -35,4 +49,4 @@ const questions = [
     }
 ];
 
-
+module.exports = questions;
