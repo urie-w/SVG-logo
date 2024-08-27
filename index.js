@@ -1,6 +1,7 @@
 const fs = require('fs');
 const inquirer = require("inquirer");
-const {Circle, Triangle, Square} = require('./Library/shapes.js');
+const question = require('./lib/shapes');
+const {Circle, Triangle, Square} = require('./lib/shapes');
 // const circle = require('./Library/shape.js');
 // const triangle = require('./Library/shape.js');
 // const square = require('./Library/shape.js');
@@ -13,7 +14,7 @@ class Svg{
         this.shapeElement = ''
     }
     render() {
-        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement}${this.textElement}</svg>`
+        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement || ''}${this.textElement}</svg>`
     }
     setTextElement(text, color) {
         this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
@@ -29,7 +30,7 @@ const questions = [
         type: 'input',
         name: 'text',
         message: 'Enter 3 characters or less:',
-        validate: (input) <= 3 || 'Text must be 3 characters or less'
+        validate: (input) => input.length <= 3 || 'Text must be 3 characters or less'
     }, 
     {
         type: 'input',
