@@ -1,53 +1,69 @@
-const fs = require('fs');
 const inquirer = require("inquirer");
-const question = require('./lib/shapes');
-const {Circle, Triangle, Square} = require('./lib/shapes');
-// const circle = require('./Library/shape.js');
-// const triangle = require('./Library/shape.js');
-// const square = require('./Library/shape.js');
-// const colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "black", "white", "gray", "brown", "salmon", "sandybrown", "seagreen", "seashell", "sienna", "silver", "skyblue", "slateblue", "slategray", "slategrey", "snow",
-//     "springgreen", "steelblue", "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat", "white", "whitesmoke", "yellow", "yellowgreen"];
+const {join} = require("path");
+const {writeFile} = require("fs/promises");
+const {createDocument} = require("./newdoc.js");
 
-class Svg{
+class cli{
     constructor() {
-        this.textElement = ''
-        this.shapeElement = ''
+        this.logo = '';
+        this.textcolor = '';
+        this.shapecolor = '';
+        this.text = '';
     }
-    render() {
-        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement || ''}${this.textElement}</svg>`
+    run() {
+        return inquirer.prompt([
+            {
+                type: 'input',
+                name: 'logo',
+                message: 'Enter 3 characters or less:',
+                validate: (input) => input.length <= 3 || 'Text must be 3 characters or less'
+            }, 
+            {
+                type: 'input',
+                name: 'textcolor',
+                message: 'Enter a color for the text:',
+            }
+        ])
+
+        .then(({logo, textcolor}) => {
+            this.logo = logo;
+            this.textcolor = textcolor;
+            return this.addAShape();
+        })
+        .then(()=> {
+            return writeFile(
+                join(__dirname, '..', 'examples', 'logo.svg'),
+                createDocument(this.logo, this.textcolor, this.shapecolor)
+            );
+        })
+        .then(() => {
+            console.log('Generated logo.svg');
+        })
+        .catch((err) => {
+            console.log(err);
+            console.log('Oops. Something went wrong.');
+        });
     }
-    setTextElement(text, color) {
-        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
-    }
-    setShapeElement(shape) {
-        this.shapeElement = shape.render()
-    }
+
+        addAShape() {
+            return inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'shape',
+                    message: 'Choose a shape:',
+                    choices: ['circle', 'triangle', 'square']
+                },
+                {
+                    type: 'input',
+                    name: 'shapecolor',
+                    message: 'Enter a color for the shape:',
+                }
+            ])
+            .then(({shape, shapecolor}) => {
+                this.shapecolor = shapecolor;
+                this.shape = shape;
+            });
+        }
 }
 
-//Defines the questions for the
-const questions = [
-    {
-        type: 'input',
-        name: 'text',
-        message: 'Enter 3 characters or less:',
-        validate: (input) => input.length <= 3 || 'Text must be 3 characters or less'
-    }, 
-    {
-        type: 'input',
-        name: 'textColor',
-        message: 'Enter a color for the text:',
-    },
-    {
-        type: 'list',
-        name: 'shape',
-        message: 'Choose a shape:',
-        choices: ['Circle', 'Triangle', 'Square']
-    },
-    {
-        type: 'input',
-        name: 'shapeColor',
-        message: 'Enter a color for the shape:',
-    }
-];
-
-module.exports = questions;
+module.exports = cli;
