@@ -1,14 +1,16 @@
-const inquirer = require("inquirer");
+const inquirer = require('inquirer');
 const {join} = require("path");
 const {writeFile} = require("fs/promises");
-const {createDocument} = require("./newdoc.js");
+const {createDocument} = require("./lib/document");
+const outputPath = 'logo.svg';
 
-class cli{
+
+class CLI{
     constructor() {
         this.logo = '';
-        this.textcolor = '';
-        this.shapecolor = '';
-        this.text = '';
+        this.textColor = '';
+        this.shapeColor = '';
+        this.shape = '';
     }
     run() {
         return inquirer.prompt([
@@ -20,21 +22,29 @@ class cli{
             }, 
             {
                 type: 'input',
-                name: 'textcolor',
+                name: 'textColor',
                 message: 'Enter a color for the text:',
             }
         ])
 
-        .then(({logo, textcolor}) => {
+        .then(({logo, textColor}) => {
             this.logo = logo;
-            this.textcolor = textcolor;
+            this.textColor = textColor;
             return this.addAShape();
         })
         .then(()=> {
-            return writeFile(
-                join(__dirname, '..', 'examples', 'logo.svg'),
-                createDocument(this.logo, this.textcolor, this.shapecolor)
-            );
+            console.log('Logo:', this.logo);
+            console.log('Text color:', this.textColor);
+            console.log('Shape:', this.shape);
+            console.log('Shape Color:', this.shapeColor);
+
+            const svgContent = createDocument(this.shape, this.shapeColor, this.logo, this.textColor);
+            const outputPath = join(__dirname, 'output', 'logo.svg');
+            return writeFile(outputPath, svgContent);
+            
+                // join(__dirname, '..', 'examples', 'logo.svg'),
+            //    svgContent
+            // );
         })
         .then(() => {
             console.log('Generated logo.svg');
@@ -55,15 +65,15 @@ class cli{
                 },
                 {
                     type: 'input',
-                    name: 'shapecolor',
+                    name: 'shapeColor',
                     message: 'Enter a color for the shape:',
                 }
             ])
-            .then(({shape, shapecolor}) => {
-                this.shapecolor = shapecolor;
+            .then(({shape, shapeColor}) => {
                 this.shape = shape;
+                this.shapeColor = shapeColor;
             });
         }
 }
 
-module.exports = cli;
+module.exports = CLI;
