@@ -4,6 +4,11 @@
 The SVG Logo Maker is a command-line tool that allows users to generate a custom SVG logos by answering some prompts. Users can input text, text color, shape, and shape color to create a unique SVG logo. The generated SVG logo can be saved as a file.
 
 ## Images
+![`logo`](/output/logo.svg)
+
+![`triangle`](output/triangle.svg)
+![`square`](output/square.svg)
+![`circle`](output/circle.svg)
 
 
 ## Features
@@ -22,5 +27,11 @@ The SVG Logo Maker is a command-line tool that allows users to generate a custom
 - Select a shape
 - Enter the shape color
 
-#License
+# Credits
+- Mark Carlson
+- UC Berkley cohort 2024
+- Discord
+- Stack Overflow
+
+# License
 This project is licensed under the MIT License.
