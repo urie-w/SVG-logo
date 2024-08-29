@@ -2,7 +2,7 @@ const {Shape, Triangle, Circle, Square} = require('./lib/shapes');
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const questions = [
+inquirer.prompt([
     {
         type: 'input',
         name: 'logo',
@@ -25,10 +25,8 @@ const questions = [
         name: 'shapeColor',
         message: 'Enter a color for the shape:',
     }
-];
-
-inquirer.prompt(questions).then((answers) => {
-    const {text, textColor, shape, shapeColor} = answers;
+]).then((answers) => {
+    const { text, textColor, shape, shapeColor } = answers;
     let shapeObject = new Shape();
     let svgContent = '';
 
@@ -138,3 +136,4 @@ inquirer.prompt(questions).then((answers) => {
 // }
 
 // module.exports = CLI;
+// svgContent = shapeObject.render();
