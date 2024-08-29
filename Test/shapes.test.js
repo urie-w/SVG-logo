@@ -1,4 +1,4 @@
-const { Circle, Triangle, Square } = require('./shapes');
+const { Circle, Triangle, Square } = require('../lib/shapes');
 
 describe ('Shape', () =>{
     it('should set color for the shape', () => { 
