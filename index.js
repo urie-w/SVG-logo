@@ -26,7 +26,7 @@ inquirer.prompt([
         message: 'Enter a color for the shape:',
     }
 ]).then((answers) => {
-    const { text, textColor, shape, shapeColor } = answers;
+    const { logo, textColor, shape, shapeColor } = answers;
     let shapeObject = new Shape();
     let svgContent = '';
 
@@ -57,7 +57,7 @@ inquirer.prompt([
 
     const svgLogo = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">
         ${svgContent}
-        <text x="${x}" y="${y}" font-size="60" text-anchor="middle" fill="${textColor}">${text}</text>
+        <text x="${x}" y="${y}" font-size="60" text-anchor="middle" fill="${textColor}">${logo}</text>
     </svg>`;
 
     fs.writeFileSync('logo.svg', svgLogo);
