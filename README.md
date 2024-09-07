@@ -28,7 +28,7 @@ The SVG Logo Maker is a command-line tool that allows users to generate a custom
 - Enter the shape color
 
 ## Link Walkthrough Video
-https://app.screencastify.com/v2/manage/videos/7VEQRVWiF8qeU1wy0Vbn
+https://drive.google.com/file/d/1y2fQ25rcwYmBQCTGiLvph2krvJf6BeU4/view?usp=sharing
 
 # Credits
 - Mark Carlson
